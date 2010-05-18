@@ -3,7 +3,6 @@
  */
 
 function Storage() {
-	this.length = null;
 	this.available = true;
 	this.serialized = null;
 	this.items = null;
@@ -22,9 +21,7 @@ function Storage() {
 		window.widget.setPreferenceForKey(this.serialized, Storage.PREFERENCE_KEY);
 	} else {
 		this.serialized = pref;'({"store_test": { "key": "store_test", "data": "asdfasdfs" },})';
-
 		this.items = eval(this.serialized);
-
 	}
 }
 
@@ -43,9 +40,7 @@ Storage.prototype.getItem = function (key) {
 }
 
 Storage.prototype.setItem = function (key, data) {
-	
-	if (!this.items[key])
-		this.length++;
+
 	this.items[key] = {
 		"key": key,
 		"data": data
@@ -55,17 +50,17 @@ Storage.prototype.setItem = function (key, data) {
 }
 
 Storage.prototype.removeItem = function (key) {
+
 	if (this.items[key]) {
 		this.items[key] = undefined;
-		this.length--;
 	}
 	this.serialize();
 }
 
 Storage.prototype.clear = function () {
-	this.length = 0;
 	this.serialized = "({})"
 	this.items = {};
+	this.serialize();
 }
 
 Storage.prototype.serialize = function() {
@@ -73,10 +68,13 @@ Storage.prototype.serialize = function() {
 	
 	for (key in this.items) {
 		var item = this.items[key];
-		json += "\"" + item.key + "\": { \"key\": \"" + item.key + "\", \"data\": \"" + item.data + "\" }, ";
+		if (typeof item != "undefined") {
+			json += "\"" + item.key + "\": { \"key\": \"" + item.key + "\", \"data\": \"" + item.data + "\" }, ";
+		}
 	}
+	this.serialized = "({" + json + "})";
 
-	window.widget.setPreferenceForKey( "({" + json + "})", Storage.PREFERENCE_KEY);
+	window.widget.setPreferenceForKey( this.serialized, Storage.PREFERENCE_KEY);
 }
 
 if (typeof navigator.storage == "undefined" ) navigator.storage = new Storage();
