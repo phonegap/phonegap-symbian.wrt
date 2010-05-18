@@ -11,9 +11,7 @@ function Telephony() {
  * @param {Integer} number The number to be called.
  */
 Telephony.prototype.send = function(number) {
-	var err = "Telephony API not available for symbian.wrt";
-	debug.log(err);
-	return { name: "TelephonyError", message: err };
+	widget.openURL('tel:+' + number);
 }
 
 if (typeof navigator.telephony == "undefined") navigator.telephony = new Telephony();
