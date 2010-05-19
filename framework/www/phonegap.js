@@ -103,7 +103,6 @@ Accelerometer.prototype.getCurrentAcceleration = function(successCallback, error
 	// If the acceleration is not available then call error
 	
 	try {
-		alert(1);
 		if (!this.serviceObj) 
 			this.serviceObj = this.getServiceObj();
 		
@@ -118,7 +117,6 @@ Accelerometer.prototype.getCurrentAcceleration = function(successCallback, error
 			SearchCriterion: "AccelerometerAxis"
 		};
 		var returnvalue = this.serviceObj.ISensor.FindSensorChannel(SensorParams);
-		alert(2);
 		var error = returnvalue["ErrorCode"];
 		var errmsg = returnvalue["ErrorMessage"];
 		if (!(error == 0 || error == 1012)) {
@@ -150,7 +148,6 @@ Accelerometer.prototype.getCurrentAcceleration = function(successCallback, error
 		// http://discussion.forum.nokia.com/forum/showthread.php?t=182151&highlight=memory+leak
 		this.serviceObj.ISensor.RegisterForNotification(criteria, function(transId, eventCode, result){
 			try {
-				alert(10);
 				var criteria = {
 					TransactionID: transId
 				};
@@ -168,9 +165,7 @@ Accelerometer.prototype.getCurrentAcceleration = function(successCallback, error
 			}
 			
 		});
-		alert(4);
 	} catch (ex) {
-		alert(5);
 		errorCallback(ex);
 	}
 
@@ -220,6 +215,42 @@ Accelerometer.prototype.getServiceObj = function() {
 }
 
 if (typeof navigator.accelerometer == "undefined") navigator.accelerometer = new Accelerometer();/**
+ * This class provides access to the device media, interfaces to both sound and video
+ * @constructor
+ */
+function Audio(src, successCallback, errorCallback) {
+	this.src = src;
+	this.successCallback = successCallback;
+	this.errorCallback = errorCallback;												
+}
+
+Audio.prototype.record = function() {
+}
+
+Audio.prototype.play = function() {
+try {
+	if (document.getElementById('gapsound'))
+		document.body.removeChild(document.getElementById('gapsound'));
+	var obj;
+	obj = document.createElement("embed");
+	obj.setAttribute("id", "gapsound");
+	obj.setAttribute("type", "audio/x-mpeg");
+	obj.setAttribute("width", "0");
+	obj.setAttribute("width", "0");
+	obj.setAttribute("hidden", "true");
+	obj.setAttribute("autostart", "true");
+	obj.setAttribute("src", this.src);
+	document.body.appendChild(obj);
+} catch (ex) { debug.log(ex.name + ": " + ex.message) }
+}
+
+Audio.prototype.pause = function() {
+}
+
+Audio.prototype.stop = function() {
+	document.body.removeChild(document.getElementById('gapsound'));
+}
+/**
  * This class provides access to the device camera.
  * @constructor
  */
@@ -1014,7 +1045,7 @@ Contacts.prototype.success_callback = function(contacts_iterator) {
 				var gapContact = new Contact();
 				gapContact.name.givenName = Contacts.GetValue(contact, "FirstName");
 				gapContact.name.familyName = Contacts.GetValue(contact, "LastName");
-				gapContact.name.formatted = gapContact.firstName + " " + gapContact.lastName;
+				gapContact.name.formatted = gapContact.name.givenName + " " + gapContact.name.familyName;
 				gapContact.emails = Contacts.getEmailsList(contact);
 				gapContact.phones = Contacts.getPhonesList(contact);
 				gapContact.address = Contacts.getAddress(contact);
@@ -1077,6 +1108,38 @@ Contacts.GetValue = function(contactObj, key) {
 }
 
 if (typeof navigator.contacts == "undefined") navigator.contacts = new Contacts();
+/**
+ * This class provides access to the debugging console.
+ * @constructor
+ */
+function DebugConsole() {
+}
+
+/**
+ * Print a normal log message to the console
+ * @param {Object|String} message Message or object to print to the console
+ */
+DebugConsole.prototype.log = function(message) {
+	
+	//This ends up in C:\jslog_widget.log on the device
+	console.log(message);
+};
+
+/**
+ * Print a warning message to the console
+ * @param {Object|String} message Message or object to print to the console
+ */
+DebugConsole.prototype.warn = function(message) {
+};
+
+/**
+ * Print an error message to the console
+ * @param {Object|String} message Message or object to print to the console
+ */
+DebugConsole.prototype.error = function(message) {
+};
+
+if (typeof window.debug == "undefined") window.debug = new DebugConsole();
 PhoneGap.ExtendWrtDeviceObj = function(){
 	
 	if (!window.device)
@@ -1267,41 +1330,26 @@ Geolocation.prototype.start = function(options) {
 if (typeof navigator.geolocation == "undefined") navigator.geolocation = new Geolocation();
 
 /**
- * This class provides access to the device media, interfaces to both sound and video
- * @constructor
+ * This class provides access to native mapping applications on the device.
  */
-function Media(src, successCallback, errorCallback) {
-	this.src = src;
-	this.successCallback = successCallback;
-	this.errorCallback = errorCallback;												
+function Map() {
+	
 }
 
-Media.prototype.record = function() {
+/**
+ * Shows a native map on the device with pins at the given positions.
+ * @param {Array} positions
+ */
+Map.prototype.show = function(positions) {
+
+	var err = "map api is unimplemented on symbian.wrt";
+	debug.log(err);
+	return { name: "MapError", message: err }
+
 }
 
-Media.prototype.play = function(src) {
+if (typeof navigator.map == "undefined") navigator.map = new Map();
 
-	if (document.getElementById('gapsound'))
-		document.body.removeChild(document.getElementById('gapsound'));
-	var obj;
-	obj = document.createElement("embed");
-	obj.setAttribute("id", "gapsound");
-	obj.setAttribute("type", "audio/x-mpeg");
-	obj.setAttribute("width", "0");
-	obj.setAttribute("width", "0");
-	obj.setAttribute("hidden", "true");
-	obj.setAttribute("autostart", "true");
-	obj.setAttribute("src", src);
-	document.body.appendChild(obj);
-}
-
-Media.prototype.pause = function() {
-}
-
-Media.prototype.stop = function() {
-}
-
-if (typeof navigator.media == "undefined") navigator.media = new Media();
 /**
  * This class provides access to notifications on the device.
  */
@@ -1462,14 +1510,26 @@ Orientation.prototype.getCurrentOrientation = function(successCallback, errorCal
 		//create a closure to persist this instance of orientation object into the RegisterForNofication callback
 		var obj = this;
 		
+		// TODO: this call crashes WRT, but there is no other way to read the orientation sensor
+		// http://discussion.forum.nokia.com/forum/showthread.php?t=182151&highlight=memory+leak
 		this.serviceObj.ISensor.RegisterForNotification(criteria, function(transId, eventCode, result){
-			alert(1);
 			var criteria = {
 				TransactionID: transId
 			};
 			try {
-				var orientation = result.ReturnValue.DeviceOrientation;
+				//var orientation = result.ReturnValue.DeviceOrientation;
 				obj.serviceObj.ISensor.Cancel(criteria);
+				
+				var orientation = null;
+				switch (result.ReturnValue.DeviceOrientation) {
+					case "DisplayUpwards": orientation = DisplayOrientation.FACE_UP; break;
+					case "DisplayDownwards": orientation = DisplayOrientation.FACE_DOWN; break;
+					case "DisplayUp": orientation = DisplayOrientation.PORTRAIT; break;
+					case "DisplayDown": orientation = DisplayOrientation.REVERSE_PORTRAIT; break;
+					case "DisplayRightUp": orientation = DisplayOrientation.LANDSCAPE_RIGHT_UP; break;
+					case "DisplayLeftUp": orientation = DisplayOrientation.LANDSCAPE_LEFT_UP; break;
+					
+				}
 				
 				obj.setOrientation(orientation);
 				
@@ -1526,6 +1586,23 @@ Orientation.prototype.getServiceObj = function() {
     }		
 	return so;
 }
+
+
+/**
+ * This class encapsulates the possible orientation values.
+ * @constructor
+ */
+function DisplayOrientation() {
+	this.code = null;
+	this.message = "";
+}
+
+DisplayOrientation.PORTRAIT = 0;
+DisplayOrientation.REVERSE_PORTRAIT = 1;
+DisplayOrientation.LANDSCAPE_LEFT_UP = 2;
+DisplayOrientation.LANDSCAPE_RIGHT_UP = 3;
+DisplayOrientation.FACE_UP = 4;
+DisplayOrientation.FACE_DOWN = 5;
 
 if (typeof navigator.orientation == "undefined") navigator.orientation = new Orientation();
 /**
@@ -1664,7 +1741,6 @@ if (typeof navigator.sms == "undefined") navigator.sms = new Sms();/**
  */
 
 function Storage() {
-	this.length = null;
 	this.available = true;
 	this.serialized = null;
 	this.items = null;
@@ -1683,9 +1759,7 @@ function Storage() {
 		window.widget.setPreferenceForKey(this.serialized, Storage.PREFERENCE_KEY);
 	} else {
 		this.serialized = pref;'({"store_test": { "key": "store_test", "data": "asdfasdfs" },})';
-
 		this.items = eval(this.serialized);
-
 	}
 }
 
@@ -1704,9 +1778,7 @@ Storage.prototype.getItem = function (key) {
 }
 
 Storage.prototype.setItem = function (key, data) {
-	
-	if (!this.items[key])
-		this.length++;
+
 	this.items[key] = {
 		"key": key,
 		"data": data
@@ -1716,17 +1788,17 @@ Storage.prototype.setItem = function (key, data) {
 }
 
 Storage.prototype.removeItem = function (key) {
+
 	if (this.items[key]) {
 		this.items[key] = undefined;
-		this.length--;
 	}
 	this.serialize();
 }
 
 Storage.prototype.clear = function () {
-	this.length = 0;
 	this.serialized = "({})"
 	this.items = {};
+	this.serialize();
 }
 
 Storage.prototype.serialize = function() {
@@ -1734,10 +1806,30 @@ Storage.prototype.serialize = function() {
 	
 	for (key in this.items) {
 		var item = this.items[key];
-		json += "\"" + item.key + "\": { \"key\": \"" + item.key + "\", \"data\": \"" + item.data + "\" }, ";
+		if (typeof item != "undefined") {
+			json += "\"" + item.key + "\": { \"key\": \"" + item.key + "\", \"data\": \"" + item.data + "\" }, ";
+		}
 	}
+	this.serialized = "({" + json + "})";
 
-	window.widget.setPreferenceForKey( "({" + json + "})", Storage.PREFERENCE_KEY);
+	window.widget.setPreferenceForKey( this.serialized, Storage.PREFERENCE_KEY);
 }
 
 if (typeof navigator.storage == "undefined" ) navigator.storage = new Storage();
+/**
+ * This class provides access to the telephony features of the device.
+ * @constructor
+ */
+function Telephony() {
+	this.number = "";
+}
+
+/**
+ * Calls the specifed number.
+ * @param {Integer} number The number to be called.
+ */
+Telephony.prototype.send = function(number) {
+	widget.openURL('tel:+' + number);
+}
+
+if (typeof navigator.telephony == "undefined") navigator.telephony = new Telephony();
