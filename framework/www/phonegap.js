@@ -998,25 +998,36 @@ Contact.prototype.displayName = function()
 
 Contacts.prototype.find = function(filter, successCallback, errorCallback, options) {
 	try {
-		
 		this.contactsService = device.getServiceObject("Service.Contact", "IDataSource");
-		this.options = options;
+		if (typeof options == 'object')
+			this.options = options;
+		else
+			this.options = {};
 		
 		var criteria = new Object();
 		criteria.Type = "Contact";
-		if (filter && filter.name)
-			criteria.Filter = { SearchVal: filter.name };
+		if (filter && filter.name) {
+			var searchTerm = '';
+			if (filter.name.givenName && filter.name.givenName.length > 0) {
+				searchTerm += filter.name.givenName;
+			}
+			if (filter.name.familyName && filter.name.familyName.length > 0) {
+				searchTerm += searchTerm.length > 0 ? ' ' + filter.name.familyName : filter.name.familyName;
+			}
+			if (!filter.name.familyName && !filter.name.givenName && filter.name.formatted) {
+				searchTerm = filter.name.formatted;
+			}
+			criteria.Filter = { SearchVal: searchTerm };
+		}
 		
 		if (typeof(successCallback) != 'function') 
 			successCallback = function(){};
 		if (typeof(errorCallback) != 'function') 
 			errorCallback = function(){};
-		if (typeof options == 'object'){
-			if (isNaN(this.options.limit))
-				this.options.limit = 200;
-			if (isNaN(this.options.page))
-				this.options.page = 1;
-		}
+		if (isNaN(this.options.limit))
+			this.options.limit = 200;
+		if (isNaN(this.options.page))
+			this.options.page = 1;
 		
 		//need a closure here to bind this method to this instance of the Contacts object
 		this.global_success = successCallback;
@@ -1028,11 +1039,13 @@ Contacts.prototype.find = function(filter, successCallback, errorCallback, optio
 		});
 	} 
 	catch (ex) {
+		alert(ex.name + ": " + ex.message);
 		errorCallback(ex);
 	}
 }
 
 Contacts.prototype.success_callback = function(contacts_iterator) {
+	try {
 	var gapContacts = new Array();
 	contacts_iterator.reset();
     var contact;
@@ -1059,6 +1072,7 @@ Contacts.prototype.success_callback = function(contacts_iterator) {
 	}
 	this.contacts = gapContacts;
 	this.global_success(gapContacts);
+	} catch (ex) { alert(ex.name + ": " + ex.message); }
 }
 
 Contacts.getEmailsList = function(contact) {
