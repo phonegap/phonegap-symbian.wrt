@@ -13,8 +13,8 @@ Map.prototype.show = function(positions) {
 
 	var err = "map api is unimplemented on symbian.wrt";
 	debug.log(err);
-	return { name: "MapError", message: err }
+	return { name: "MapError", message: err };
 
-}
+};
 
 if (typeof navigator.map == "undefined") navigator.map = new Map();

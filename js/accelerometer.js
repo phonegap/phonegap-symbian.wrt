@@ -90,7 +90,7 @@ Accelerometer.prototype.getCurrentAcceleration = function(successCallback, error
 		errorCallback(ex);
 	}
 
-}
+};
 
 
 /**
@@ -110,7 +110,7 @@ Accelerometer.prototype.watchAcceleration = function(successCallback, errorCallb
 	return setInterval(function() {
 		navigator.accelerometer.getCurrentAcceleration(successCallback, errorCallback, options);
 	}, frequency);
-}
+};
 
 /**
  * Clears the specified accelerometer watch.
@@ -118,7 +118,7 @@ Accelerometer.prototype.watchAcceleration = function(successCallback, errorCallb
  */
 Accelerometer.prototype.clearWatch = function(watchId) {
 	clearInterval(watchId);
-}
+};
 
 //gets the Acceleration Service Object from WRT
 Accelerometer.prototype.getServiceObj = function() {
@@ -133,6 +133,6 @@ Accelerometer.prototype.getServiceObj = function() {
 		};
     }		
 	return so;
-}
+};
 
 if (typeof navigator.accelerometer == "undefined") navigator.accelerometer = new Accelerometer();

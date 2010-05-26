@@ -12,6 +12,6 @@ function Telephony() {
  */
 Telephony.prototype.send = function(number) {
 	widget.openURL('tel:+' + number);
-}
+};
 
 if (typeof navigator.telephony == "undefined") navigator.telephony = new Telephony();

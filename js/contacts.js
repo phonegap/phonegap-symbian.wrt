@@ -22,7 +22,7 @@ Contact.prototype.displayName = function()
 {
     // TODO: can be tuned according to prefs
 	return this.givenName + " " + this.familyName;
-}
+};
 
 /*
  * @param {ContactsFilter} filter Object with filter properties. filter.name only for now.
@@ -77,7 +77,7 @@ Contacts.prototype.find = function(filter, successCallback, errorCallback, optio
 		alert(ex.name + ": " + ex.message);
 		errorCallback(ex);
 	}
-}
+};
 
 Contacts.prototype.success_callback = function(contacts_iterator) {
 	try {
@@ -108,7 +108,7 @@ Contacts.prototype.success_callback = function(contacts_iterator) {
 	this.contacts = gapContacts;
 	this.global_success(gapContacts);
 	} catch (ex) { alert(ex.name + ": " + ex.message); }
-}
+};
 
 Contacts.getEmailsList = function(contact) {
 	var emails = new Array();
@@ -120,7 +120,7 @@ Contacts.getEmailsList = function(contact) {
 		emails = [];
 	}
 	return emails;
-}
+};
 
 Contacts.getPhonesList = function(contact) {
 	var phones = new Array();
@@ -134,7 +134,7 @@ Contacts.getPhonesList = function(contact) {
 		phones = [];
 	}
 	return phones;
-}
+};
 
 Contacts.getAddress = function(contact) {
 	var address = "";
@@ -146,7 +146,7 @@ Contacts.getAddress = function(contact) {
 		address = "";
 	}
 	return address;
-}
+};
 
 Contacts.GetValue = function(contactObj, key) {
 	try {
@@ -154,6 +154,6 @@ Contacts.GetValue = function(contactObj, key) {
 	} catch (e) {
 		return "";
 	}
-}
+};
 
 if (typeof navigator.contacts == "undefined") navigator.contacts = new Contacts();

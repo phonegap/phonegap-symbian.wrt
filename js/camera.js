@@ -46,6 +46,6 @@ Camera.prototype.getPicture = function(successCallback, errorCallback, options){
 		errorCallback.call(ex);
 	}
 	
-}
+};
 
 if (typeof navigator.camera == "undefined") navigator.camera = new Camera();

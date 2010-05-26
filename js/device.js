@@ -25,7 +25,7 @@ PhoneGap.ExtendWrtDeviceObj = function(){
 	catch (e) {
 		device.available = false;
 	}
-}
+};
 
 PhoneGap.GetWrtDeviceProperty = function(serviceObj, key) {
 	var criteria = { "Entity": "Device", "Key": key };
@@ -36,7 +36,7 @@ PhoneGap.GetWrtDeviceProperty = function(serviceObj, key) {
 	else {
 		return null;
 	}
-}
+};
 
 PhoneGap.GetWrtPlatformVersion = function(serviceObj) {
 	var criteria = { "Entity": "Device", "Key": "PlatformVersion" };
@@ -50,6 +50,6 @@ PhoneGap.GetWrtPlatformVersion = function(serviceObj) {
 	else {
 		return null;
 	}
-}
+};
 
 PhoneGap.ExtendWrtDeviceObj();

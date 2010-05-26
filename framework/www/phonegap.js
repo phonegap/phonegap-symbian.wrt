@@ -169,7 +169,7 @@ Accelerometer.prototype.getCurrentAcceleration = function(successCallback, error
 		errorCallback(ex);
 	}
 
-}
+};
 
 
 /**
@@ -189,7 +189,7 @@ Accelerometer.prototype.watchAcceleration = function(successCallback, errorCallb
 	return setInterval(function() {
 		navigator.accelerometer.getCurrentAcceleration(successCallback, errorCallback, options);
 	}, frequency);
-}
+};
 
 /**
  * Clears the specified accelerometer watch.
@@ -197,7 +197,7 @@ Accelerometer.prototype.watchAcceleration = function(successCallback, errorCallb
  */
 Accelerometer.prototype.clearWatch = function(watchId) {
 	clearInterval(watchId);
-}
+};
 
 //gets the Acceleration Service Object from WRT
 Accelerometer.prototype.getServiceObj = function() {
@@ -212,7 +212,7 @@ Accelerometer.prototype.getServiceObj = function() {
 		};
     }		
 	return so;
-}
+};
 
 if (typeof navigator.accelerometer == "undefined") navigator.accelerometer = new Accelerometer();/**
  * This class provides access to the device media, interfaces to both sound and video
@@ -225,7 +225,7 @@ function Audio(src, successCallback, errorCallback) {
 }
 
 Audio.prototype.record = function() {
-}
+};
 
 Audio.prototype.play = function() {
 try {
@@ -241,15 +241,15 @@ try {
 	obj.setAttribute("autostart", "true");
 	obj.setAttribute("src", this.src);
 	document.body.appendChild(obj);
-} catch (ex) { debug.log(ex.name + ": " + ex.message) }
-}
+} catch (ex) { debug.log(ex.name + ": " + ex.message); }
+};
 
 Audio.prototype.pause = function() {
-}
+};
 
 Audio.prototype.stop = function() {
 	document.body.removeChild(document.getElementById('gapsound'));
-}
+};
 /**
  * This class provides access to the device camera.
  * @constructor
@@ -298,7 +298,7 @@ Camera.prototype.getPicture = function(successCallback, errorCallback, options){
 		errorCallback.call(ex);
 	}
 	
-}
+};
 
 if (typeof navigator.camera == "undefined") navigator.camera = new Camera();/*
 Copyright © 2009 Nokia. All rights reserved.
@@ -509,7 +509,7 @@ if(undefined == com.nokia.device)
         listServices: __device_service_list,
         listInterfaces: __device_service_interfaces,
         version: "0.1",
-        info: "device prototype",
+        info: "device prototype"
         };
 else
     throw("com.nokia.device already defined");
@@ -987,7 +987,7 @@ Contact.prototype.displayName = function()
 {
     // TODO: can be tuned according to prefs
 	return this.givenName + " " + this.familyName;
-}
+};
 
 /*
  * @param {ContactsFilter} filter Object with filter properties. filter.name only for now.
@@ -1042,7 +1042,7 @@ Contacts.prototype.find = function(filter, successCallback, errorCallback, optio
 		alert(ex.name + ": " + ex.message);
 		errorCallback(ex);
 	}
-}
+};
 
 Contacts.prototype.success_callback = function(contacts_iterator) {
 	try {
@@ -1073,7 +1073,7 @@ Contacts.prototype.success_callback = function(contacts_iterator) {
 	this.contacts = gapContacts;
 	this.global_success(gapContacts);
 	} catch (ex) { alert(ex.name + ": " + ex.message); }
-}
+};
 
 Contacts.getEmailsList = function(contact) {
 	var emails = new Array();
@@ -1085,7 +1085,7 @@ Contacts.getEmailsList = function(contact) {
 		emails = [];
 	}
 	return emails;
-}
+};
 
 Contacts.getPhonesList = function(contact) {
 	var phones = new Array();
@@ -1099,7 +1099,7 @@ Contacts.getPhonesList = function(contact) {
 		phones = [];
 	}
 	return phones;
-}
+};
 
 Contacts.getAddress = function(contact) {
 	var address = "";
@@ -1111,7 +1111,7 @@ Contacts.getAddress = function(contact) {
 		address = "";
 	}
 	return address;
-}
+};
 
 Contacts.GetValue = function(contactObj, key) {
 	try {
@@ -1119,7 +1119,7 @@ Contacts.GetValue = function(contactObj, key) {
 	} catch (e) {
 		return "";
 	}
-}
+};
 
 if (typeof navigator.contacts == "undefined") navigator.contacts = new Contacts();
 /**
@@ -1181,7 +1181,7 @@ PhoneGap.ExtendWrtDeviceObj = function(){
 	catch (e) {
 		device.available = false;
 	}
-}
+};
 
 PhoneGap.GetWrtDeviceProperty = function(serviceObj, key) {
 	var criteria = { "Entity": "Device", "Key": key };
@@ -1192,7 +1192,7 @@ PhoneGap.GetWrtDeviceProperty = function(serviceObj, key) {
 	else {
 		return null;
 	}
-}
+};
 
 PhoneGap.GetWrtPlatformVersion = function(serviceObj) {
 	var criteria = { "Entity": "Device", "Key": "PlatformVersion" };
@@ -1206,7 +1206,7 @@ PhoneGap.GetWrtPlatformVersion = function(serviceObj) {
 	else {
 		return null;
 	}
-}
+};
 
 PhoneGap.ExtendWrtDeviceObj();/**
  * This class provides access to device GPS data.
@@ -1338,7 +1338,7 @@ Geolocation.prototype.start = function(options) {
 		dis.lastPosition = positionObj;
 	});
 	
-}
+};
 
 
 if (typeof navigator.geolocation == "undefined") navigator.geolocation = new Geolocation();
@@ -1358,9 +1358,9 @@ Map.prototype.show = function(positions) {
 
 	var err = "map api is unimplemented on symbian.wrt";
 	debug.log(err);
-	return { name: "MapError", message: err }
+	return { name: "MapError", message: err };
 
-}
+};
 
 if (typeof navigator.map == "undefined") navigator.map = new Map();
 
@@ -1379,7 +1379,7 @@ Notification.prototype.vibrate = function(mills)
 	
 	this.sysinfo = Notification.getSysinfoObject();
 	this.sysinfo.startvibra(mills, 100);
-}
+};
 
 //TODO: this is not beeping
 Notification.prototype.beep = function(count, volume)
@@ -1389,7 +1389,7 @@ Notification.prototype.beep = function(count, volume)
 	
 	this.sysinfo = Notification.getSysinfoObject();	
 	this.sysinfo.beep(220,2000);
-}
+};
 
 
 /**
@@ -1430,11 +1430,11 @@ Notification.embedSysinfoObject = function() {
 	el.setAttribute("hidden", "yes");
 	document.getElementsByTagName("body")[0].appendChild(el);
 	return;
-}
+};
 
 Notification.getSysinfoObject = function() {
 	return document.embeds[0];
-}
+};
 
 if (typeof navigator.notification == "undefined") navigator.notification = new Notification();
 /**
@@ -1488,7 +1488,7 @@ Orientation.prototype.getCurrentOrientation = function(successCallback, errorCal
 			errorCallback({
 				name: "DeviceErr",
 				message: "Could not initialize service object"
-			})
+			});
 		
 		//get the sensor channel
 		var SensorParams = {
@@ -1599,7 +1599,7 @@ Orientation.prototype.getServiceObj = function() {
 		};
     }		
 	return so;
-}
+};
 
 
 /**
@@ -1732,7 +1732,7 @@ Sms.prototype.send = function(number, message, successCallback, errorCallback, o
 		errorCallback.call({ name: "SmsError", message: ex.name + ": " + ex.message });
   	}
 
-}
+};
 
 
 //gets the Sms Service Object from WRT
@@ -1748,7 +1748,7 @@ Sms.prototype.getServiceObj = function() {
 		};
     }		
 	return so;
-}
+};
 
 if (typeof navigator.sms == "undefined") navigator.sms = new Sms();/**
  * @author ryan
@@ -1781,7 +1781,7 @@ Storage.PREFERENCE_KEY = "phonegap_storage_pref_key";
 
 Storage.prototype.index = function (key) {
 	
-}
+};
 
 Storage.prototype.getItem = function (key) {
 	try {
@@ -1789,7 +1789,7 @@ Storage.prototype.getItem = function (key) {
 	} catch (ex) {
 		return null;
 	}
-}
+};
 
 Storage.prototype.setItem = function (key, data) {
 
@@ -1799,7 +1799,7 @@ Storage.prototype.setItem = function (key, data) {
 	};
 	
 	this.serialize();
-}
+};
 
 Storage.prototype.removeItem = function (key) {
 
@@ -1807,13 +1807,13 @@ Storage.prototype.removeItem = function (key) {
 		this.items[key] = undefined;
 	}
 	this.serialize();
-}
+};
 
 Storage.prototype.clear = function () {
-	this.serialized = "({})"
+	this.serialized = "({})";
 	this.items = {};
 	this.serialize();
-}
+};
 
 Storage.prototype.serialize = function() {
 	var json = "";
@@ -1827,7 +1827,7 @@ Storage.prototype.serialize = function() {
 	this.serialized = "({" + json + "})";
 
 	window.widget.setPreferenceForKey( this.serialized, Storage.PREFERENCE_KEY);
-}
+};
 
 if (typeof navigator.storage == "undefined" ) navigator.storage = new Storage();
 /**
@@ -1844,6 +1844,6 @@ function Telephony() {
  */
 Telephony.prototype.send = function(number) {
 	widget.openURL('tel:+' + number);
-}
+};
 
 if (typeof navigator.telephony == "undefined") navigator.telephony = new Telephony();

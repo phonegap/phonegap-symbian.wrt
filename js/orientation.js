@@ -49,7 +49,7 @@ Orientation.prototype.getCurrentOrientation = function(successCallback, errorCal
 			errorCallback({
 				name: "DeviceErr",
 				message: "Could not initialize service object"
-			})
+			});
 		
 		//get the sensor channel
 		var SensorParams = {
@@ -160,7 +160,7 @@ Orientation.prototype.getServiceObj = function() {
 		};
     }		
 	return so;
-}
+};
 
 
 /**

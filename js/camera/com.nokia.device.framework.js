@@ -97,7 +97,7 @@ if(undefined == com.nokia.device)
         listServices: __device_service_list,
         listInterfaces: __device_service_interfaces,
         version: "0.1",
-        info: "device prototype",
+        info: "device prototype"
         };
 else
     throw("com.nokia.device already defined");

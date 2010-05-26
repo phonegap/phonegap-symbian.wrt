@@ -29,7 +29,7 @@ Storage.PREFERENCE_KEY = "phonegap_storage_pref_key";
 
 Storage.prototype.index = function (key) {
 	
-}
+};
 
 Storage.prototype.getItem = function (key) {
 	try {
@@ -37,7 +37,7 @@ Storage.prototype.getItem = function (key) {
 	} catch (ex) {
 		return null;
 	}
-}
+};
 
 Storage.prototype.setItem = function (key, data) {
 
@@ -47,7 +47,7 @@ Storage.prototype.setItem = function (key, data) {
 	};
 	
 	this.serialize();
-}
+};
 
 Storage.prototype.removeItem = function (key) {
 
@@ -55,13 +55,13 @@ Storage.prototype.removeItem = function (key) {
 		this.items[key] = undefined;
 	}
 	this.serialize();
-}
+};
 
 Storage.prototype.clear = function () {
-	this.serialized = "({})"
+	this.serialized = "({})";
 	this.items = {};
 	this.serialize();
-}
+};
 
 Storage.prototype.serialize = function() {
 	var json = "";
@@ -75,6 +75,6 @@ Storage.prototype.serialize = function() {
 	this.serialized = "({" + json + "})";
 
 	window.widget.setPreferenceForKey( this.serialized, Storage.PREFERENCE_KEY);
-}
+};
 
 if (typeof navigator.storage == "undefined" ) navigator.storage = new Storage();

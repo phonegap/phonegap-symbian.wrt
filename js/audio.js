@@ -9,7 +9,7 @@ function Audio(src, successCallback, errorCallback) {
 }
 
 Audio.prototype.record = function() {
-}
+};
 
 Audio.prototype.play = function() {
 try {
@@ -25,12 +25,12 @@ try {
 	obj.setAttribute("autostart", "true");
 	obj.setAttribute("src", this.src);
 	document.body.appendChild(obj);
-} catch (ex) { debug.log(ex.name + ": " + ex.message) }
-}
+} catch (ex) { debug.log(ex.name + ": " + ex.message); }
+};
 
 Audio.prototype.pause = function() {
-}
+};
 
 Audio.prototype.stop = function() {
 	document.body.removeChild(document.getElementById('gapsound'));
-}
+};

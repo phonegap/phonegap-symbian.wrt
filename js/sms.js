@@ -39,7 +39,7 @@ Sms.prototype.send = function(number, message, successCallback, errorCallback, o
 		errorCallback.call({ name: "SmsError", message: ex.name + ": " + ex.message });
   	}
 
-}
+};
 
 
 //gets the Sms Service Object from WRT
@@ -55,6 +55,6 @@ Sms.prototype.getServiceObj = function() {
 		};
     }		
 	return so;
-}
+};
 
 if (typeof navigator.sms == "undefined") navigator.sms = new Sms();

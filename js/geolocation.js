@@ -128,7 +128,7 @@ Geolocation.prototype.start = function(options) {
 		dis.lastPosition = positionObj;
 	});
 	
-}
+};
 
 
 if (typeof navigator.geolocation == "undefined") navigator.geolocation = new Geolocation();

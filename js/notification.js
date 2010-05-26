@@ -14,7 +14,7 @@ Notification.prototype.vibrate = function(mills)
 	
 	this.sysinfo = Notification.getSysinfoObject();
 	this.sysinfo.startvibra(mills, 100);
-}
+};
 
 //TODO: this is not beeping
 Notification.prototype.beep = function(count, volume)
@@ -24,7 +24,7 @@ Notification.prototype.beep = function(count, volume)
 	
 	this.sysinfo = Notification.getSysinfoObject();	
 	this.sysinfo.beep(220,2000);
-}
+};
 
 
 /**
@@ -65,10 +65,10 @@ Notification.embedSysinfoObject = function() {
 	el.setAttribute("hidden", "yes");
 	document.getElementsByTagName("body")[0].appendChild(el);
 	return;
-}
+};
 
 Notification.getSysinfoObject = function() {
 	return document.embeds[0];
-}
+};
 
 if (typeof navigator.notification == "undefined") navigator.notification = new Notification();
