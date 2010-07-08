@@ -20,6 +20,7 @@ DebugConsole.prototype.log = function(message) {
  * @param {Object|String} message Message or object to print to the console
  */
 DebugConsole.prototype.warn = function(message) {
+	console.log(message);
 };
 
 /**
@@ -27,6 +28,7 @@ DebugConsole.prototype.warn = function(message) {
  * @param {Object|String} message Message or object to print to the console
  */
 DebugConsole.prototype.error = function(message) {
+	console.log(message);
 };
 
 if (typeof window.debug == "undefined") window.debug = new DebugConsole();
