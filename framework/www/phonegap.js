@@ -1047,27 +1047,29 @@ Contacts.prototype.find = function(filter, successCallback, errorCallback, optio
 Contacts.prototype.success_callback = function(contacts_iterator) {
 	try {
 	var gapContacts = new Array();
-	contacts_iterator.reset();
-    var contact;
-	var i = 0;
-	var end = this.options.page * this.options.limit;
-	var start = end - this.options.limit;
-	while ((contact = contacts_iterator.getNext()) != undefined && i < end) {
-		try {
-			if (i >= start) {
-				var gapContact = new Contact();
-				gapContact.name.givenName = Contacts.GetValue(contact, "FirstName");
-				gapContact.name.familyName = Contacts.GetValue(contact, "LastName");
-				gapContact.name.formatted = gapContact.name.givenName + " " + gapContact.name.familyName;
-				gapContact.emails = Contacts.getEmailsList(contact);
-				gapContact.phones = Contacts.getPhonesList(contact);
-				gapContact.address = Contacts.getAddress(contact);
-				gapContact.id = Contacts.GetValue(contact, "id");
-				gapContacts.push(gapContact);
+	if (contacts_iterator) {
+		contacts_iterator.reset();
+		var contact;
+		var i = 0;
+		var end = this.options.page * this.options.limit;
+		var start = end - this.options.limit;
+		while ((contact = contacts_iterator.getNext()) != undefined && i < end) {
+			try {
+				if (i >= start) {
+					var gapContact = new Contact();
+					gapContact.name.givenName = Contacts.GetValue(contact, "FirstName");
+					gapContact.name.familyName = Contacts.GetValue(contact, "LastName");
+					gapContact.name.formatted = gapContact.name.givenName + " " + gapContact.name.familyName;
+					gapContact.emails = Contacts.getEmailsList(contact);
+					gapContact.phones = Contacts.getPhonesList(contact);
+					gapContact.address = Contacts.getAddress(contact);
+					gapContact.id = Contacts.GetValue(contact, "id");
+					gapContacts.push(gapContact);
+				}
+				i++;
+			} catch (e) {
+				alert("ContactsError (" + e.name + ": " + e.message + ")");
 			}
-			i++;
-		} catch (e) {
-			alert("ContactsError (" + e.name + ": " + e.message + ")");
 		}
 	}
 	this.contacts = gapContacts;
@@ -1144,6 +1146,7 @@ DebugConsole.prototype.log = function(message) {
  * @param {Object|String} message Message or object to print to the console
  */
 DebugConsole.prototype.warn = function(message) {
+	console.log(message);
 };
 
 /**
@@ -1151,6 +1154,7 @@ DebugConsole.prototype.warn = function(message) {
  * @param {Object|String} message Message or object to print to the console
  */
 DebugConsole.prototype.error = function(message) {
+	console.log(message);
 };
 
 if (typeof window.debug == "undefined") window.debug = new DebugConsole();
