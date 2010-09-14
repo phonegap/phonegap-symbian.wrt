@@ -2,6 +2,15 @@ if (typeof(DeviceInfo) != 'object')
     DeviceInfo = {};
 
 /**
+ * 
+ */
+window.addEventListener('load', function() {
+	var e = document.createEvent('Events');
+	e.initEvent('deviceready');
+	document.dispatchEvent(e);
+}, false);
+
+/**
  * This represents the PhoneGap API itself, and provides a global namespace for accessing
  * information about the state of PhoneGap.
  * @class
