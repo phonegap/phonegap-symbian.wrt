@@ -49,3 +49,14 @@ PhoneGap.exec = function() {
 PhoneGap.run_command = function() {
 };
 
+/**
+* funnction to close an application.
+* @param reasonToExit   The reason to exit. 0 = no reason.
+*/
+function exit(reasonToExit)
+{
+	if(reasonToExit != 0){
+		alert(reasonToExit);
+	}
+	window.close();
+}
