@@ -55,6 +55,7 @@ PhoneGap.run_command = function() {
 */
 function exit(reasonToExit)
 {
+        reasonToExit = reasonToExit || 0;
 	if(reasonToExit != 0){
 		alert(reasonToExit);
 	}
