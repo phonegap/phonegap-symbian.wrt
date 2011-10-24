@@ -1,6 +1,4 @@
-## PhoneGap has been accepted into the Apache Software Foundation 
-for incubation as Apache Callback, where it will remain free and open source. 
-This will ensure open, independent stewardship of the project over the long term.
+### PhoneGap has been accepted into the Apache Software Foundation for incubation as Apache Callback, where it will remain free and open source. This will ensure open, independent stewardship of the project over the long term.
 
 ---
 
